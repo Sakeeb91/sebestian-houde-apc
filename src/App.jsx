@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Menu,
   X,
@@ -21,6 +21,37 @@ import {
 } from 'lucide-react';
 
 /* --- Components --- */
+
+const ScrollReveal = ({ children, delay = 0, className = '' }) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const Navbar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => (
   <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 max-w-7xl mx-auto w-full text-white">
@@ -82,43 +113,47 @@ const Hero = () => (
 const AboutSection = () => (
   <section id="a-propos" className="py-20 px-6 max-w-7xl mx-auto">
     <div className="grid lg:grid-cols-2 gap-16 items-center">
-      <div>
-        <h4 className="text-amber-600 font-bold uppercase tracking-wider text-sm mb-2">À propos</h4>
-        <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">Un entrepreneur général<br/>qui prend son métier au sérieux.</h2>
-        <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-          Sebastien Houde est entrepreneur général licencié RBQ avec près de 10 ans d'expérience en construction résidentielle au Québec. Groupe APC, c'est un travail minutieux, une communication directe et des soumissions détaillées — sans surprises.
-        </p>
-        <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-          Des rénovations complètes aux constructions neuves, chaque projet est exécuté avec la même rigueur. Le chantier est propre, les délais sont respectés, et le résultat parle de lui-même.
-        </p>
+      <ScrollReveal>
+        <div>
+          <h4 className="text-amber-600 font-bold uppercase tracking-wider text-sm mb-2">À propos</h4>
+          <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">Un entrepreneur général<br/>qui prend son métier au sérieux.</h2>
+          <p className="text-gray-600 text-lg mb-6 leading-relaxed">
+            Sebastien Houde est entrepreneur général licencié RBQ avec près de 10 ans d'expérience en construction résidentielle au Québec. Groupe APC, c'est un travail minutieux, une communication directe et des soumissions détaillées — sans surprises.
+          </p>
+          <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+            Des rénovations complètes aux constructions neuves, chaque projet est exécuté avec la même rigueur. Le chantier est propre, les délais sont respectés, et le résultat parle de lui-même.
+          </p>
 
-        <a href="#contact" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors inline-flex items-center gap-2">
-          Nous contacter <ArrowRight size={16} />
-        </a>
+          <a href="#contact" className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors inline-flex items-center gap-2">
+            Nous contacter <ArrowRight size={16} />
+          </a>
 
-        <div className="grid grid-cols-3 gap-4 mt-12 pt-12 border-t border-gray-100">
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900">10+</h3>
-            <p className="text-gray-500 text-sm mt-1">Années d'expérience</p>
-          </div>
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900">RBQ</h3>
-            <p className="text-gray-500 text-sm mt-1">Licence vérifiée</p>
-          </div>
-          <div>
-            <h3 className="text-3xl font-bold text-gray-900">6+</h3>
-            <p className="text-gray-500 text-sm mt-1">Membres d'équipe</p>
+          <div className="grid grid-cols-3 gap-4 mt-12 pt-12 border-t border-gray-100">
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900">10+</h3>
+              <p className="text-gray-500 text-sm mt-1">Années d'expérience</p>
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900">RBQ</h3>
+              <p className="text-gray-500 text-sm mt-1">Licence vérifiée</p>
+            </div>
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900">6+</h3>
+              <p className="text-gray-500 text-sm mt-1">Membres d'équipe</p>
+            </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
 
-      <div className="grid grid-cols-2 gap-4 h-[600px]">
-        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop" alt="Chantier" className="w-full h-full object-cover rounded-2xl" />
-        <div className="grid gap-4 h-full">
-          <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=1000&auto=format&fit=crop" alt="Réunion d'équipe" className="w-full h-1/2 object-cover rounded-2xl" />
-          <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop" alt="Intérieur fini" className="w-full h-1/2 object-cover rounded-2xl" />
+      <ScrollReveal delay={200}>
+        <div className="grid grid-cols-2 gap-4 h-[600px]">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop" alt="Chantier" className="w-full h-full object-cover rounded-2xl" />
+          <div className="grid gap-4 h-full">
+            <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=1000&auto=format&fit=crop" alt="Réunion d'équipe" className="w-full h-1/2 object-cover rounded-2xl" />
+            <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=1000&auto=format&fit=crop" alt="Intérieur fini" className="w-full h-1/2 object-cover rounded-2xl" />
+          </div>
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   </section>
 );
@@ -126,13 +161,15 @@ const AboutSection = () => (
 const ServicesSection = () => (
   <section id="services" className="bg-[#111] py-24 px-6 text-white">
     <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <h4 className="text-amber-500 font-bold uppercase tracking-wider text-sm mb-2">Nos services</h4>
-        <h2 className="text-4xl md:text-5xl font-bold mb-4">Construction résidentielle<br />complète — du début à la fin</h2>
-      </div>
+      <ScrollReveal>
+        <div className="text-center mb-16">
+          <h4 className="text-amber-500 font-bold uppercase tracking-wider text-sm mb-2">Nos services</h4>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Construction résidentielle<br />complète — du début à la fin</h2>
+        </div>
+      </ScrollReveal>
 
       <div className="grid lg:grid-cols-[1.2fr_1.8fr] gap-8">
-        <div className="relative group overflow-hidden rounded-3xl h-[600px]">
+        <ScrollReveal><div className="relative group overflow-hidden rounded-3xl h-[600px]">
           <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000&auto=format&fit=crop" alt="Planification" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
             <div>
@@ -141,7 +178,7 @@ const ServicesSection = () => (
               <button className="text-amber-500 flex items-center gap-2 font-medium hover:gap-3 transition-all">En savoir plus <ArrowRight size={16} /></button>
             </div>
           </div>
-        </div>
+        </div></ScrollReveal>
 
         <div className="grid sm:grid-cols-2 gap-6">
           {[
@@ -150,7 +187,8 @@ const ServicesSection = () => (
             { icon: Hammer, title: "Rénovation", desc: "Transformation d'espaces existants avec des finitions modernes et un travail soigné." },
             { icon: Ruler, title: "Agrandissement", desc: "Extensions et ajouts qui s'intègrent parfaitement à la structure existante." }
           ].map((item, idx) => (
-            <div key={idx} className="bg-[#1a1a1a] p-8 rounded-3xl hover:bg-[#222] transition-colors border border-white/5 group">
+            <ScrollReveal key={idx} delay={idx * 100}>
+            <div className="bg-[#1a1a1a] p-8 rounded-3xl hover:bg-[#222] transition-colors border border-white/5 group">
               <div className="bg-[#2a2a2a] w-12 h-12 rounded-full flex items-center justify-center mb-6 group-hover:bg-amber-600 transition-colors">
                 <item.icon size={24} className="text-white" />
               </div>
@@ -163,6 +201,7 @@ const ServicesSection = () => (
                 </div>
               </div>
             </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -172,10 +211,12 @@ const ServicesSection = () => (
 
 const TeamSection = () => (
   <section id="equipe" className="py-24 px-6 max-w-7xl mx-auto bg-gray-50/50">
-    <div className="text-center mb-16">
-      <h4 className="text-amber-600 font-bold uppercase tracking-wider text-sm mb-2">Notre équipe</h4>
-      <h2 className="text-4xl font-bold text-gray-900">Des gens de métier<br />dédiés à la qualité</h2>
-    </div>
+    <ScrollReveal>
+      <div className="text-center mb-16">
+        <h4 className="text-amber-600 font-bold uppercase tracking-wider text-sm mb-2">Notre équipe</h4>
+        <h2 className="text-4xl font-bold text-gray-900">Des gens de métier<br />dédiés à la qualité</h2>
+      </div>
+    </ScrollReveal>
 
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {[
@@ -186,13 +227,15 @@ const TeamSection = () => (
         { name: "Isabelle Roy", role: "Administration", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400&auto=format&fit=crop" },
         { name: "François Gagnon", role: "Maçon", img: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?q=80&w=400&auto=format&fit=crop" }
       ].map((member, idx) => (
-        <div key={idx} className="group">
-          <div className="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5]">
-            <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" />
+        <ScrollReveal key={idx} delay={idx * 100}>
+          <div className="group">
+            <div className="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5]">
+              <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" />
+            </div>
+            <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
+            <p className="text-amber-600 text-sm font-medium">{member.role}</p>
           </div>
-          <h3 className="font-bold text-lg text-gray-900">{member.name}</h3>
-          <p className="text-amber-600 text-sm font-medium">{member.role}</p>
-        </div>
+        </ScrollReveal>
       ))}
     </div>
   </section>
@@ -205,7 +248,7 @@ const LocationSection = () => (
       <div className="absolute inset-0 bg-white/60 backdrop-blur-md"></div>
     </div>
 
-    <div className="relative z-10 max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row">
+    <ScrollReveal className="relative z-10 max-w-6xl mx-auto"><div className="bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row">
       <div className="p-12 lg:w-1/3 flex flex-col justify-center">
         <h3 className="text-3xl font-bold mb-8">Nous joindre</h3>
         <p className="text-gray-600 mb-8">Vous avez un projet en tête? Contactez-nous pour discuter de vos besoins et obtenir une soumission détaillée.</p>
@@ -244,19 +287,21 @@ const LocationSection = () => (
            </div>
         </div>
       </div>
-    </div>
+    </div></ScrollReveal>
   </section>
 );
 
 const TestimonialSection = () => (
   <section className="py-24 px-6 max-w-7xl mx-auto">
-    <div className="text-center mb-16">
-      <span className="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-500 uppercase tracking-wide">Témoignages</span>
-      <h2 className="text-4xl font-bold mt-4">Ce que nos clients disent</h2>
-    </div>
+    <ScrollReveal>
+      <div className="text-center mb-16">
+        <span className="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-500 uppercase tracking-wide">Témoignages</span>
+        <h2 className="text-4xl font-bold mt-4">Ce que nos clients disent</h2>
+      </div>
+    </ScrollReveal>
 
     <div className="flex flex-col lg:flex-row gap-8 items-center justify-center">
-       <div className="bg-white border border-gray-100 p-10 rounded-3xl shadow-lg max-w-2xl relative">
+       <ScrollReveal><div className="bg-white border border-gray-100 p-10 rounded-3xl shadow-lg max-w-2xl relative">
           <div className="text-amber-500 flex gap-1 mb-6">
             {[1,2,3,4,5].map(i => <Star key={i} size={20} fill="currentColor" />)}
           </div>
@@ -268,9 +313,9 @@ const TestimonialSection = () => (
                 <p className="text-gray-500 text-sm">Propriétaire, Québec</p>
              </div>
           </div>
-       </div>
+       </div></ScrollReveal>
 
-       <div className="flex flex-col gap-6">
+       <ScrollReveal delay={200}><div className="flex flex-col gap-6">
          {[
             { text: "Soumission détaillée, aucune surprise. Le travail a été livré dans les délais.", name: "Catherine Bouchard" },
             { text: "Professionnel et attentif aux détails. Le résultat dépasse nos attentes.", name: "Jean-François Côté" }
@@ -286,7 +331,7 @@ const TestimonialSection = () => (
                </div>
             </div>
          ))}
-       </div>
+       </div></ScrollReveal>
     </div>
   </section>
 );
@@ -302,14 +347,16 @@ const FAQSection = () => {
 
     return (
         <section className="py-24 px-6 max-w-3xl mx-auto">
-             <div className="text-center mb-12">
-                <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">FAQ</span>
-                <h2 className="text-3xl font-bold mt-4">Questions fréquentes</h2>
-             </div>
+             <ScrollReveal>
+               <div className="text-center mb-12">
+                  <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">FAQ</span>
+                  <h2 className="text-3xl font-bold mt-4">Questions fréquentes</h2>
+               </div>
+             </ScrollReveal>
 
              <div className="space-y-4">
                 {faqs.map((faq, idx) => (
-                    <div key={idx} className="border border-gray-200 rounded-xl overflow-hidden">
+                    <ScrollReveal key={idx} delay={idx * 100}><div className="border border-gray-200 rounded-xl overflow-hidden">
                         <button
                             onClick={() => setOpenIndex(idx === openIndex ? -1 : idx)}
                             className="w-full flex items-center justify-between p-6 bg-white hover:bg-gray-50 transition-colors text-left"
@@ -322,7 +369,7 @@ const FAQSection = () => {
                                 {faq.a}
                             </div>
                         )}
-                    </div>
+                    </div></ScrollReveal>
                 ))}
              </div>
         </section>
@@ -335,14 +382,14 @@ const CTASection = () => (
              <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=2000&auto=format&fit=crop" alt="Construction" className="w-full h-full object-cover" />
              <div className="absolute inset-0 bg-black/70"></div>
         </div>
-        <div className="relative z-10 max-w-2xl mx-auto text-white">
+        <ScrollReveal className="relative z-10 max-w-2xl mx-auto text-white">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Prêt à démarrer votre projet?</h2>
             <p className="text-xl text-gray-300 mb-10">Parlez-nous de votre vision. On s'occupe du reste — avec précision, transparence et un travail bien fait.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#contact" className="bg-white text-black px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors">Demander une soumission</a>
                 <a href="#contact" className="bg-transparent border border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white/10 transition-colors">Nous contacter</a>
             </div>
-        </div>
+        </ScrollReveal>
     </section>
 );
 
