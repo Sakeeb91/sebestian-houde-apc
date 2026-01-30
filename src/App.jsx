@@ -25,7 +25,7 @@ import {
 const Navbar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => (
   <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 max-w-7xl mx-auto w-full text-white">
     <div className="flex items-center gap-2 cursor-pointer">
-      <span className="text-2xl font-bold tracking-[0.15em]">APC</span>
+      <span className="text-2xl font-bold tracking-[0.15em]">Groupe APC</span>
     </div>
 
     <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-200">
@@ -86,7 +86,7 @@ const AboutSection = () => (
         <h4 className="text-amber-600 font-bold uppercase tracking-wider text-sm mb-2">À propos</h4>
         <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">Un entrepreneur général<br/>qui prend son métier au sérieux.</h2>
         <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-          Sebastien Houde est entrepreneur général licencié RBQ avec près de 10 ans d'expérience en construction résidentielle au Québec. APC, c'est un travail minutieux, une communication directe et des soumissions détaillées — sans surprises.
+          Sebastien Houde est entrepreneur général licencié RBQ avec près de 10 ans d'expérience en construction résidentielle au Québec. Groupe APC, c'est un travail minutieux, une communication directe et des soumissions détaillées — sans surprises.
         </p>
         <p className="text-gray-600 text-lg mb-8 leading-relaxed">
           Des rénovations complètes aux constructions neuves, chaque projet est exécuté avec la même rigueur. Le chantier est propre, les délais sont respectés, et le résultat parle de lui-même.
@@ -296,7 +296,7 @@ const FAQSection = () => {
     const faqs = [
         { q: "Est-ce que vous gérez les permis municipaux?", a: "Oui, nous prenons en charge les démarches auprès de la municipalité pour les permis de construction et de rénovation nécessaires à votre projet." },
         { q: "Combien de temps dure une rénovation de cuisine?", a: "En général, une rénovation de cuisine prend entre 3 et 5 semaines selon l'ampleur des travaux structurels et le choix des finitions." },
-        { q: "Êtes-vous un entrepreneur licencié?", a: "Oui, APC détient une licence RBQ valide. Nous sommes pleinement assurés et conformes aux exigences du Québec." },
+        { q: "Êtes-vous un entrepreneur licencié?", a: "Oui, Groupe APC détient une licence RBQ valide. Nous sommes pleinement assurés et conformes aux exigences du Québec." },
         { q: "Comment fonctionne le processus de soumission?", a: "Contactez-nous pour une première discussion. Nous évaluons votre projet, puis vous recevez une soumission détaillée avec chaque poste clairement expliqué. Pas de frais cachés." }
     ];
 
@@ -351,7 +351,7 @@ const Footer = () => (
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 md:col-span-1">
                 <div className="flex items-center gap-2 mb-6">
-                    <span className="text-2xl font-bold tracking-[0.15em]">APC</span>
+                    <span className="text-2xl font-bold tracking-[0.15em]">Groupe APC</span>
                 </div>
                 <p className="text-gray-500 text-sm leading-relaxed mb-6">Construction résidentielle au Québec. Précision, transparence et exécution soignée.</p>
                 <div className="flex gap-4">
@@ -400,7 +400,7 @@ const Footer = () => (
             </div>
         </div>
         <div className="max-w-7xl mx-auto pt-8 border-t border-gray-900 text-center text-gray-600 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>&copy; 2026 APC Construction. Tous droits réservés.</p>
+            <p>&copy; 2026 Groupe APC. Tous droits réservés.</p>
             <div className="flex gap-6">
                 <span className="cursor-pointer hover:text-white">Politique de confidentialité</span>
                 <span className="cursor-pointer hover:text-white">Conditions d'utilisation</span>
